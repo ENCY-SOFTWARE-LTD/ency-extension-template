@@ -1,0 +1,17 @@
+{
+  "packageId": "EncyExtension",
+  "version": "0.1.0",
+  "targetFramework": "net8.0",
+  "sdkVersion": "2.0.17",
+  "dependencies": [
+    {
+      "id": "EncySoftware.CAMAPI.SDK.Net",
+      "version": "2.0.17"
+    }
+  ],
+  "description": "Describe what your extension does",
+  "author": "",
+  "tags": "Utility, ency-extension",
+  "iconPath": "",
+  "requiresRestart": false
+}

@@ -1,0 +1,47 @@
+---
+description: How this ENCY extension repo is wired — anatomy, invariants, publish flow
+alwaysApply: true
+---
+
+# ENCY extension — how this repo works
+
+This is an extension for ENCY CAM, published to the ENCY Extension Store by CI.
+
+## Anatomy (all under `src/`)
+
+- `ExtensionFactory.cs` — the entry point. The class MUST stay `CAMAPI.ExtensionFactory`
+  (namespace + name is how ENCY finds it). It maps extension **id strings** to instances.
+- `*.settings.json` — declares the extensions inside this dll for ENCY. Each declared `id`
+  MUST have a matching branch in `ExtensionFactory.Create`. `module_path` must point at the
+  built dll name: `${extensionJsonFolder}/<AssemblyName>.dll`.
+- `Extension.cs` (`UtilityExtension`) — the actual logic. A utility implements `IExtension` +
+  `IExtensionUtility` and does its work in `Run(IExtensionUtilityContext, out TResultStatus)`.
+  Exceptions do not cross the host boundary: catch everything, report via `TResultStatus`.
+- `package.info.json` — store metadata. Keep `packageId` = assembly name. `tags` MUST keep
+  the `ency-extension` marker or the catalog will not index the package. `sdkVersion` drives
+  the "minimal ENCY version" hint — bump it together with the `EncySoftware.CAMAPI.Sdk.Net`
+  package version. Do not set `iconPath` (packing chokes on it today).
+- `readme.md` — becomes the store card. Write it for users, not developers.
+
+## Rules
+
+- Target stays `net8.0-windows`; the SDK package comes from the public `ency-master` feed
+  (see `nuget.config`) — do not add other ENCY feeds.
+- Build for packing with `dotnet build src -c Release -t:PackReady` (normal build + sweeps
+  the SDK doc-xmls out of the output; the output folder is packed into the package as-is).
+- CAMAPI COM objects should be wrapped in `ComWrapper<T>` (see `Extension.cs`) and disposed.
+- Version is stamped from the git tag at publish (`v1.2.3` → `1.2.3`); the value in
+  `package.info.json` only matters for local packing.
+
+## Publishing
+
+Push a version tag — CI builds, packs and publishes to the store:
+
+```bash
+git tag v0.1.0 && git push --tags
+```
+
+Or use the `ency-extension-store` MCP tools when available: `publish_extension` (tags and
+pushes for you), then `publish_status` (run status → store card link). A NEW extension lands
+hidden until a store moderator approves it; the direct card link works immediately. New
+versions of an approved extension go live without moderation.

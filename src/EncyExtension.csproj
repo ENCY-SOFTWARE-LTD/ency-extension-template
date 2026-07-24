@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutDir>bin\$(Configuration)\</OutDir>
+  </PropertyGroup>
+
+  <!-- keep the Release output flat and clean: it is packed into the store package as-is -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EncySoftware.CAMAPI.Sdk.Net" Version="2.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="EncyExtension.settings.json" CopyToOutputDirectory="Always" />
+    <None Update="package.info.json" CopyToOutputDirectory="Always" />
+    <None Update="readme.md" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <!-- The SDK's transitive packages copy ~60 doc xmls into the output via their own
+       AfterTargets="Build" hooks, which run after any hook declared here. PackReady therefore
+       DEPENDS on Build: its body executes only after Build and all its hooks are done.
+       Build with `dotnet build src -c Release -t:PackReady` to get an output folder that is
+       clean to pack into the store package as-is. -->
+  <Target Name="PackReady" DependsOnTargets="Build">
+    <ItemGroup>
+      <_SdkJunk Include="$(OutDir)*.xml" Exclude="$(OutDir)$(AssemblyName).xml" />
+      <_SdkJunk Include="$(OutDir)*.stbuildresult.json" />
+    </ItemGroup>
+    <Delete Files="@(_SdkJunk)" />
+    <Message Importance="high" Text="PackReady: output cleaned for packing -> $(OutDir)" />
+  </Target>
+</Project>

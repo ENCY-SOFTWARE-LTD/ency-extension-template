@@ -1,0 +1,61 @@
+# Push a version tag (v1.2.3) -> build -> pack -> publish to the ENCY Extension Store.
+#
+# Auth: the FIRST publish of a new extension needs the ENCY_STORE_TOKEN secret (it also
+# registers this repository as the package's trusted publisher). Every publish after that
+# works with NO secret at all - the workflow authenticates with its own GitHub OIDC token.
+
+name: publish-to-ency-store
+
+on:
+  push:
+    tags: ['v*']          # v1.2.3 publishes version 1.2.3
+  workflow_dispatch:       # manual run: validates only, unless dry-run is set to false
+    inputs:
+      dry-run:
+        description: Validate the package on the server but do not publish
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write          # lets the run prove its identity to the store (OIDC trusted publishing)
+
+jobs:
+  publish:
+    runs-on: windows-latest    # net8.0-windows target; pure net8.0 could use ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # dotnet build (NOT publish) keeps the output flat; the PackReady target then sweeps the
+      # SDK doc-xmls out, leaving exactly the files that belong in the store package.
+      - name: Build
+        shell: bash
+        run: dotnet build src -c Release -t:PackReady
+
+      - name: Version from tag
+        shell: bash
+        run: |
+          v=""
+          if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" == v* ]]; then
+            v="${GITHUB_REF_NAME#v}"
+          fi
+          echo "PKG_VERSION=$v" >> "$GITHUB_ENV"
+
+      # The build output goes to the store backend, which packs the .nupkg itself —
+      # no packing tool needed on the runner.
+      - name: Publish to the ENCY store
+        id: publish
+        uses: ENCY-SOFTWARE-LTD/publish-extension-action@v1
+        with:
+          token: ${{ secrets.ENCY_STORE_TOKEN }}
+          folder: src/bin/Release
+          version: ${{ env.PKG_VERSION }}
+          dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
+
+      - name: Card link
+        shell: bash
+        run: echo "Published ${{ steps.publish.outputs.package-id }} ${{ steps.publish.outputs.version }} -> ${{ steps.publish.outputs.card-url }}"
