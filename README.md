@@ -11,10 +11,17 @@ push a tag — the extension appears in the store. No files copied or uploaded b
    ```powershell
    .\rename.ps1 -Name MyCoolExtension
    ```
-3. For the **first** publish only: add the `ENCY_STORE_TOKEN` secret (Settings → Secrets and
-   variables → Actions) — a store API token. That publish registers this repository as the
-   extension's trusted publisher; afterwards the secret can be deleted — publishes authenticate
-   with the workflow's own GitHub OIDC token (no secrets, nothing expires).
+3. Claim the extension name for this repository — **once, and no secret ends up in GitHub**:
+   ```bash
+   ency-extension-mcp login          # once per machine
+   ency-extension-mcp claim MyCoolExtension owner/MyCoolExtension
+   ```
+   From then on every publish, the first one included, authenticates with the workflow's own GitHub
+   OIDC token: nothing is stored in the repository and nothing expires.
+
+   *Without the CLI:* add an `ENCY_STORE_TOKEN` secret (Settings → Secrets and variables → Actions)
+   with a store API token. The first publish then registers this repository as the extension's
+   trusted publisher and the secret can be deleted afterwards.
 4. Write your code in `src/` (start at `Extension.cs`), fill `src/readme.md` (it becomes the
    store card README) and `description`/`author` in `src/package.info.json`.
 5. Publish:

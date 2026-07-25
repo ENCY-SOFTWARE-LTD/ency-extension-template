@@ -1,8 +1,10 @@
 # Push a version tag (v1.2.3) -> build -> pack -> publish to the ENCY Extension Store.
 #
-# Auth: the FIRST publish of a new extension needs the ENCY_STORE_TOKEN secret (it also
-# registers this repository as the package's trusted publisher). Every publish after that
-# works with NO secret at all - the workflow authenticates with its own GitHub OIDC token.
+# Auth: no secret is needed once the repository is registered as the extension's trusted publisher -
+# the workflow authenticates with its own GitHub OIDC token. Register it from your machine with
+# `ency-extension-mcp claim <PackageId> <owner/repo>` (see README). If you cannot run the CLI, add an
+# ENCY_STORE_TOKEN secret instead: the first publish then registers the repository and the secret can
+# be deleted afterwards.
 
 name: publish-to-ency-store
 
