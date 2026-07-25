@@ -22,6 +22,12 @@
     <None Update="EncyExtension.settings.json" CopyToOutputDirectory="Always" />
     <None Update="package.info.json" CopyToOutputDirectory="Always" />
     <None Update="readme.md" CopyToOutputDirectory="Always" />
+    <!-- Pictures of the extension: the store turns them into the card's screenshots and takes the
+         first one as its cover. Two details matter. Only image extensions are copied, so the note in
+         that folder does not end up in the package (and cannot shadow readme.md). And Link flattens
+         them into the output root, because CI uploads only the top level of the build output. -->
+    <None Include="screenshots\*.png;screenshots\*.jpg;screenshots\*.jpeg;screenshots\*.gif;screenshots\*.webp"
+          CopyToOutputDirectory="Always" Link="%(Filename)%(Extension)" />
   </ItemGroup>
 
   <!-- The SDK's transitive packages copy ~60 doc xmls into the output via their own

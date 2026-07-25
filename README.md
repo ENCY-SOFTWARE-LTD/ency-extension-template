@@ -63,6 +63,7 @@ the store backend packs the uploaded build output itself.
 | `src/EncyExtension.settings.json` | declares the extensions of this dll for ENCY (ids must match the factory) |
 | `src/package.info.json` | store metadata: packageId, version, `tags` (keep the `ency-extension` marker!), sdkVersion |
 | `src/readme.md` | store card README |
+| `src/screenshots/` | PNG/JPG pictures of your extension — they become the card's screenshots, and the first one becomes its cover |
 | `.github/workflows/publish.yml` | tag → build → pack → publish |
 
 ## Rules worth knowing
