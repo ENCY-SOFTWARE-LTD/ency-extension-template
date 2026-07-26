@@ -6,27 +6,25 @@ push a tag — the extension appears in the store. No files copied or uploaded b
 
 ## Quick start
 
-1. **Use this template** (GitHub button) → clone your new repo.
-2. Rename the extension:
-   ```powershell
-   .\rename.ps1 -Name MyCoolExtension
-   ```
-3. Let this repository publish under that name — once, and **nothing goes into GitHub**: open
-   [the store](https://dmc.encycam.com/store) → **My published** → *Connect a GitHub repository*,
-   type the extension name and `owner/MyCoolExtension`, press Connect. Signing in to the store is
-   the proof it is you; no token is created, so there is no secret to store, rotate or leak.
+1. **Use this template** (GitHub button) — name the repository after your extension, e.g.
+   `PocketMill`. The first push renames the placeholder inside `src/` to match, on its own, so
+   `git clone` gets you a project already called by your name.
+2. Let this repository publish under that name — once, and **nothing goes into GitHub**: open
+   [the store](https://dmc.encycam.com/store) → **My published** → *Connect a GitHub repository*.
+   Signing in to the store is the proof it is you; no token is created, so there is no secret to
+   store, rotate or leak.
 
    Every publish after that — the first one included — authenticates with the workflow's own GitHub
    OIDC token, which GitHub issues per run and which expires on its own.
-4. Write your code in `src/` (start at `Extension.cs`), fill `src/readme.md` (it becomes the
+3. Write your code in `src/` (start at `Extension.cs`), fill `src/readme.md` (it becomes the
    store card README) and `description`/`author` in `src/package.info.json`.
-5. Publish — no commands needed: open **Actions → publish-to-ency-store → Run workflow** and press
+4. Publish — no commands needed: open **Actions → publish-to-ency-store → Run workflow** and press
    the button with the fields empty. It works out the next version, tags the commit, builds, packs
    and publishes; the card link is in the job summary.
 
    From a terminal instead: `git tag v0.1.0 && git push --tags`.
 
-   Skipped step 3? The run stops and tells you so, with a ready link to the connect form — press
+   Skipped step 2? The run stops and tells you so, with a ready link to the connect form — press
    Connect there and re-run the job.
 
 ## Rather stay in the console?
@@ -37,7 +35,7 @@ Optional, and only worth it if you also want your editor's assistant to do this 
 ```bash
 dotnet tool install -g EncySoftware.ExtensionStoreMcp
 ency-extension-mcp setup
-ency-extension-mcp claim MyCoolExtension owner/MyCoolExtension   # same as step 3, from a terminal
+ency-extension-mcp claim MyCoolExtension owner/MyCoolExtension   # same as step 2, from a terminal
 ```
 
 `setup` signs you in to the store (your licsys account; only a refresh token is kept on your
@@ -64,7 +62,7 @@ the store backend packs the uploaded build output itself.
 |---|---|
 | `src/Extension.cs` | your extension logic (`IExtensionUtility.Run`) |
 | `src/ExtensionFactory.cs` | entry point ENCY looks for (`CAMAPI.ExtensionFactory`) — keep the class/namespace |
-| `src/EncyExtension.settings.json` | declares the extensions of this dll for ENCY (ids must match the factory) |
+| `src/<YourName>.settings.json` | declares the extensions of this dll for ENCY (ids must match the factory) |
 | `src/package.info.json` | store metadata: packageId, version, `tags` (keep the `ency-extension` marker!), sdkVersion |
 | `src/readme.md` | store card README |
 | `src/screenshots/` | PNG/JPG pictures of your extension — they become the card's screenshots, and the first one becomes its cover |
