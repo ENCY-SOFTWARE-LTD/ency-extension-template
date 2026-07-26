@@ -47,7 +47,9 @@ jobs:
       - name: Build
         id: build
         shell: bash
-        run: dotnet build src -c Release -t:PackReady
+        # Kept so a failure can be reported with the compiler's own words instead of just "Build".
+        # GitHub runs bash with -eo pipefail, so tee does not swallow a failed build.
+        run: dotnet build src -c Release -t:PackReady 2>&1 | tee "$RUNNER_TEMP/build.log"
 
       # Tag push -> that version. Manual run -> the version you typed, or the next patch after the
       # latest v-tag (no tags yet: 0.1.0), so pressing "Run workflow" with empty inputs just works.
@@ -115,3 +117,4 @@ jobs:
         with:
           status: FAILED
           failed-step: ${{ steps.build.outcome == 'failure' && 'Build' || 'Publish' }}
+          log-file: ${{ runner.temp }}/build.log
