@@ -11,35 +11,36 @@ push a tag — the extension appears in the store. No files copied or uploaded b
    ```powershell
    .\rename.ps1 -Name MyCoolExtension
    ```
-3. Install the store CLI — once per machine (needs the .NET 8 SDK):
-   ```bash
-   dotnet tool install -g EncySoftware.ExtensionStoreMcp
-   ency-extension-mcp setup
-   ```
-   `setup` logs you in to the store (your licsys account; only a refresh token is kept) and, if you
-   use Cursor or Claude Code, registers the MCP server so the assistant can create repos and publish
-   for you. Add `--no-login` to skip the login.
-4. Claim the extension name for this repository — **once, and no secret ends up in GitHub**:
-   ```bash
-   ency-extension-mcp claim MyCoolExtension owner/MyCoolExtension
-   ```
-   From then on every publish, the first one included, authenticates with the workflow's own GitHub
-   OIDC token: nothing is stored in the repository and nothing expires.
+3. Let this repository publish under that name — once, and **nothing goes into GitHub**: open
+   [the store](https://dmc.encycam.com/store) → **My published** → *Connect a GitHub repository*,
+   type the extension name and `owner/MyCoolExtension`, press Connect. Signing in to the store is
+   the proof it is you; no token is created, so there is no secret to store, rotate or leak.
 
-   *Without the CLI:* add an `ENCY_STORE_TOKEN` secret (Settings → Secrets and variables → Actions)
-   with a store API token. The first publish then registers this repository as the extension's
-   trusted publisher and the secret can be deleted afterwards.
-5. Write your code in `src/` (start at `Extension.cs`), fill `src/readme.md` (it becomes the
+   Every publish after that — the first one included — authenticates with the workflow's own GitHub
+   OIDC token, which GitHub issues per run and which expires on its own.
+4. Write your code in `src/` (start at `Extension.cs`), fill `src/readme.md` (it becomes the
    store card README) and `description`/`author` in `src/package.info.json`.
-6. Publish:
+5. Publish:
    ```bash
    git tag v0.1.0 && git push --tags
    ```
    The workflow builds, packs and publishes; the card link is in the job summary.
 
-Working in Cursor or Claude Code? After step 3 you can skip the rest and just ask: *"create an ENCY
-extension called MyCoolExtension"*, then *"publish it as 0.1.0"* — the assistant does the repo, the
-claim and the tag through the same CLI.
+## Rather stay in the console?
+
+Optional, and only worth it if you also want your editor's assistant to do this for you. Needs the
+.NET 8 SDK:
+
+```bash
+dotnet tool install -g EncySoftware.ExtensionStoreMcp
+ency-extension-mcp setup
+ency-extension-mcp claim MyCoolExtension owner/MyCoolExtension   # same as step 3, from a terminal
+```
+
+`setup` signs you in to the store (your licsys account; only a refresh token is kept on your
+machine) and, in Cursor or Claude Code, registers the MCP server. Add `--no-login` to skip the
+sign-in. With that in place you can skip the steps above and simply ask: *"create an ENCY extension
+called MyCoolExtension"*, then *"publish it as 0.1.0"*.
 
 ## Local build & try-out
 

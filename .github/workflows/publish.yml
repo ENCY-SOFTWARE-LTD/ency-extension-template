@@ -4,10 +4,11 @@
 #     next patch after the latest tag, and the run tags the commit for you.
 #
 # Auth: no secret is needed once the repository is registered as the extension's trusted publisher -
-# the workflow authenticates with its own GitHub OIDC token. Register it from your machine with
-# `ency-extension-mcp claim <PackageId> <owner/repo>` (see README). If you cannot run the CLI, add an
-# ENCY_STORE_TOKEN secret instead: the first publish then registers the repository and the secret can
-# be deleted afterwards.
+# the workflow authenticates with its own GitHub OIDC token. Register it in the store under
+# My published -> "Connect a GitHub repository", or from a terminal with
+# `ency-extension-mcp claim <PackageId> <owner/repo>` (see README). The ENCY_STORE_TOKEN secret
+# below is a legacy fallback for repositories registered before either of those existed; leaving it
+# unset is the normal case.
 
 name: publish-to-ency-store
 
