@@ -45,6 +45,7 @@ jobs:
       # dotnet build (NOT publish) keeps the output flat; the PackReady target then sweeps the
       # SDK doc-xmls out, leaving exactly the files that belong in the store package.
       - name: Build
+        id: build
         shell: bash
         run: dotnet build src -c Release -t:PackReady
 
@@ -104,3 +105,13 @@ jobs:
       - name: Card link
         shell: bash
         run: echo "Published ${{ steps.publish.outputs.package-id }} ${{ steps.publish.outputs.version }} -> ${{ steps.publish.outputs.card-url }}"
+
+      # Anything that fails BEFORE the publish action — a compile error, most often — never reaches
+      # that action, so it could never be reported. This is the one place that can say so, and the
+      # author reads it on the extension's page instead of coming here to look.
+      - name: Tell the store this run failed
+        if: failure()
+        uses: ENCY-SOFTWARE-LTD/publish-extension-action/report@v1
+        with:
+          status: FAILED
+          failed-step: ${{ steps.build.outcome == 'failure' && 'Build' || 'Publish' }}
