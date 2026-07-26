@@ -20,11 +20,14 @@ push a tag — the extension appears in the store. No files copied or uploaded b
    OIDC token, which GitHub issues per run and which expires on its own.
 4. Write your code in `src/` (start at `Extension.cs`), fill `src/readme.md` (it becomes the
    store card README) and `description`/`author` in `src/package.info.json`.
-5. Publish:
-   ```bash
-   git tag v0.1.0 && git push --tags
-   ```
-   The workflow builds, packs and publishes; the card link is in the job summary.
+5. Publish — no commands needed: open **Actions → publish-to-ency-store → Run workflow** and press
+   the button with the fields empty. It works out the next version, tags the commit, builds, packs
+   and publishes; the card link is in the job summary.
+
+   From a terminal instead: `git tag v0.1.0 && git push --tags`.
+
+   Skipped step 3? The run stops and tells you so, with a ready link to the connect form — press
+   Connect there and re-run the job.
 
 ## Rather stay in the console?
 
