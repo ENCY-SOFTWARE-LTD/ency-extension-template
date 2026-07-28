@@ -3,7 +3,7 @@ description: Transform the calculated CLD toolpath data before it reaches the ne
 alwaysApply: false
 ---
 
-<!-- Generated from guides/cldata-converter.md in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/cldata-converter.md in EncySoftware/ency-extension-mcp.
      Edit it there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 # CLData converter — `IExtensionGeomCLDataConverter`

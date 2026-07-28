@@ -97,7 +97,7 @@ jobs:
       # no packing tool needed on the runner.
       - name: Publish to the ENCY store
         id: publish
-        uses: ENCY-SOFTWARE-LTD/publish-extension-action@v1
+        uses: EncySoftware/publish-extension-action@v1
         with:
           token: ${{ secrets.ENCY_STORE_TOKEN }}
           folder: src/bin/Release
@@ -113,7 +113,7 @@ jobs:
       # author reads it on the extension's page instead of coming here to look.
       - name: Tell the store this run failed
         if: failure()
-        uses: ENCY-SOFTWARE-LTD/publish-extension-action/report@v1
+        uses: EncySoftware/publish-extension-action/report@v1
         with:
           status: FAILED
           failed-step: ${{ steps.build.outcome == 'failure' && 'Build' || 'Publish' }}

@@ -3,7 +3,7 @@ description: Add a button to the ENCY utilities menu or toolbar; runs on click w
 alwaysApply: false
 ---
 
-<!-- Generated from guides/utility.md in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/utility.md in EncySoftware/ency-extension-mcp.
      Edit it there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 # Utility extension — `IExtensionUtility`

@@ -3,7 +3,7 @@ description: Add items to the right-click menu of a technology operation in the 
 alwaysApply: false
 ---
 
-<!-- Generated from guides/operation-popup.md in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/operation-popup.md in EncySoftware/ency-extension-mcp.
      Edit it there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 # Operation popup — `IExtensionOperationPopup`

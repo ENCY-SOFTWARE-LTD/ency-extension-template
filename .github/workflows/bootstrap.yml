@@ -18,7 +18,7 @@ permissions:
 jobs:
   rename:
     # Never rename the template itself — it must keep its placeholder for everyone else.
-    if: github.repository != 'ENCY-SOFTWARE-LTD/ency-extension-template'
+    if: github.repository != 'EncySoftware/ency-extension-template'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

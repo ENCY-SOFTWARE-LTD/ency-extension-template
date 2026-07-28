@@ -3,7 +3,7 @@ description: Cross-cutting rules for any extension: COM lifetime, error handling
 alwaysApply: false
 ---
 
-<!-- Generated from guides/cookbook.md in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/cookbook.md in EncySoftware/ency-extension-mcp.
      Edit it there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 # ENCY extension cookbook — rules that apply to every entry point

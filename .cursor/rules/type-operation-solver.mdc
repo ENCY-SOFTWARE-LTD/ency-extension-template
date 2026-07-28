@@ -3,7 +3,7 @@ description: Implement your own toolpath calculation algorithm for one or more o
 alwaysApply: false
 ---
 
-<!-- Generated from guides/operation-solver.md in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/operation-solver.md in EncySoftware/ency-extension-mcp.
      Edit it there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 # Operation solver — `ICamApiTechOperationSolver`

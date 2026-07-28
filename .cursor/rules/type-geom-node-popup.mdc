@@ -3,7 +3,7 @@ description: Add items to the right-click menu of a node in the 3D geometry mode
 alwaysApply: false
 ---
 
-<!-- Generated from guides/geom-node-popup.md in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/geom-node-popup.md in EncySoftware/ency-extension-mcp.
      Edit it there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 # Geometry node popup — `IExtensionGeomModelNodePopup`

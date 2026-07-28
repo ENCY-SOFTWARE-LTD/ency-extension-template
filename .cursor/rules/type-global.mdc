@@ -3,7 +3,7 @@ description: Run code once when ENCY starts and once when it shuts down; no UI o
 alwaysApply: false
 ---
 
-<!-- Generated from guides/global.md in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/global.md in EncySoftware/ency-extension-mcp.
      Edit it there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 # Global extension — `IExtensionGlobal`

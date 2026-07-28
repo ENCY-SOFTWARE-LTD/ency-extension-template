@@ -3,7 +3,7 @@ description: Integrate ENCY with a PLM system: browse items, download projects, 
 alwaysApply: false
 ---
 
-<!-- Generated from guides/plm.md in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/plm.md in EncySoftware/ency-extension-mcp.
      Edit it there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 # PLM integration — `IExtensionPLM`

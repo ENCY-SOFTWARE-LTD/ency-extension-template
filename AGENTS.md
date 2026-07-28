@@ -1,6 +1,6 @@
 # Working on this ENCY extension
 
-<!-- Generated from guides/_index.json in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/_index.json in EncySoftware/ency-extension-mcp.
      Edit the guides there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 This repo is one extension for ENCY CAM. GitHub Actions builds it and the ENCY Extension Store packs

@@ -3,7 +3,7 @@ description: Intercept or wrap how another utility is executed - custom file sel
 alwaysApply: false
 ---
 
-<!-- Generated from guides/utility-runner.md in ENCY-SOFTWARE-LTD/ency-extension-mcp.
+<!-- Generated from guides/utility-runner.md in EncySoftware/ency-extension-mcp.
      Edit it there and run tools/sync-rules.ps1 - changes made here are overwritten. -->
 
 # Utility runner — `IExtensionUtilityRunner`
