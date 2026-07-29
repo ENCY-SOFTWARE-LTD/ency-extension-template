@@ -2,11 +2,11 @@
   "packageId": "EncyExtension",
   "version": "0.1.0",
   "targetFramework": "net8.0",
-  "sdkVersion": "2.0.17",
+  "sdkVersion": "3.0.1-rc.22",
   "dependencies": [
     {
       "id": "EncySoftware.CAMAPI.SDK.Net",
-      "version": "2.0.17"
+      "version": "3.0.1-rc.22"
     }
   ],
   "description": "Describe what your extension does",

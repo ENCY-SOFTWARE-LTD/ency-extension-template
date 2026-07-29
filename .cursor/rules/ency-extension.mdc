@@ -25,8 +25,15 @@ This is an extension for ENCY CAM, published to the ENCY Extension Store by CI.
 
 ## Rules
 
-- Target stays `net8.0-windows`; the SDK package comes from the public `ency-master` feed
-  (see `nuget.config`) — do not add other ENCY feeds.
+- **This template targets ENCY 3.** The SDK is `EncySoftware.CAMAPI.Sdk.Net` **3.0.1-rc.22** —
+  a release candidate, because that is the only 3.x published so far. Do NOT swap it for a 2.x
+  version to "get something stable": 2.x is the previous generation of ENCY, and an extension built
+  against it is an extension for the old product. Say so plainly if the pinned rc is a problem
+  rather than quietly moving to 2.x.
+- Target stays `net8.0-windows` — the SDK's own assemblies are `netstandard2.0`, so ENCY 3 needs no
+  newer framework here, and the CI image stays as it is.
+- The SDK package comes from the public `ency-master` feed (see `nuget.config`) — do not add other
+  ENCY feeds.
 - Build for packing with `dotnet build src -c Release -t:PackReady` (normal build + sweeps
   the SDK doc-xmls out of the output; the output folder is packed into the package as-is).
 - CAMAPI COM objects should be wrapped in `ComWrapper<T>` (see `Extension.cs`) and disposed.
