@@ -21,6 +21,10 @@ on:
         description: 'Version to publish (leave empty for the next patch after the latest tag)'
         type: string
         default: ''
+      category:
+        description: 'Storefront category (leave empty to keep the current one, or let a moderator sort it)'
+        type: string
+        default: ''
       dry-run:
         description: Validate the package on the server but publish nothing
         type: boolean
@@ -102,6 +106,9 @@ jobs:
           token: ${{ secrets.ENCY_STORE_TOKEN }}
           folder: src/bin/Release
           version: ${{ env.PKG_VERSION }}
+          # Empty on a tag push, and empty is silence: the store keeps the category the extension
+          # already has. Ids: https://dmc.encycam.com/store/api/categories
+          category: ${{ github.event_name == 'workflow_dispatch' && inputs.category || '' }}
           dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
 
       - name: Card link
